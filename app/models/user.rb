@@ -3,6 +3,8 @@ class User < ApplicationRecord
   validates :phone, uniqueness: true
   validates :email, uniqueness: { allow_blank: true }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
+
+  has_secure_password
 end
 
 # == Schema Information
