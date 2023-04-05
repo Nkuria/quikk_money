@@ -51,4 +51,6 @@ end
 
 gem 'rubocop'
 
-gem "bcrypt", "~> 3.1"
+gem 'bcrypt', '~> 3.1'
+
+gem 'jsonapi-serializer'

@@ -62,7 +62,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
-# Shoulda Matchers provides RSpec- and Minitest-compatible one-liners to test common Rails functionality
+# Shoulda Matchers provides RSpec one-liners to test common Rails functionality
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
