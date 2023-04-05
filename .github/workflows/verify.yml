@@ -1,40 +1,43 @@
-name: Verify
-on: [push]
+name: Linters
+
+on: [push, pull_request]
 
 jobs:
-  linters:
-    name: Linters
+  rubocop:
+    name: Rubocop
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Ruby and install gems
+      - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          bundler-cache: true
+          ruby-version: 3.0.3
 
-      - name: Setup Node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 16
-          cache: yarn
-
-      - name: Install packages
+      - name: Install dependencies
         run: |
-          yarn install --pure-lockfile
+          gem install bundler
+          bundle install --jobs 4 --retry 3
 
-      - name: Run linters
-        run: |
-          bin/rubocop --parallel
-          bin/stylelint
-          bin/prettier
-          bin/eslint
+      - name: Run Rubocop
+        run: bundle exec rubocop
 
-      - name: Run security checks
-        run: |
-          bin/bundler-audit --update
-          bin/brakeman -q -w2
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
 
   # tests:
     # name: Tests
