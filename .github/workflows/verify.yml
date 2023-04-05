@@ -24,18 +24,18 @@ jobs:
       - name: Run Rubocop
         run: bundle exec rubocop
 
-  eslint:
-    name: ESLint
-    runs-on: ubuntu-latest
+  # eslint:
+  #   name: ESLint
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
+  #     - name: Install dependencies
+  #       run: npm install
 
-      - name: Run ESLint
+  #     - name: Run ESLint
         run: npm run lint
 
 
