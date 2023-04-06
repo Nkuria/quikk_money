@@ -4,6 +4,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: { allow_blank: true }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
 
+  has_one :account, dependent: :destroy
+
   has_secure_password
 end
 
