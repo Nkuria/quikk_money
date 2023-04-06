@@ -26,7 +26,7 @@ class Transaction < ApplicationRecord
 
   def create_notification
     Notification.create(user: receiver, title: "New Transaction", message: "Hello #{receiver.first_name}, You have received #{amount} from #{sender.first_name}")
-    TransactionMailer.transaction_notification(self).deliver_now
+    TransactionMailer.transaction_notification(self).deliver_later
   end
 end
 

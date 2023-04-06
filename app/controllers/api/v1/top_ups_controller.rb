@@ -3,7 +3,7 @@ class Api::V1::TopUpsController < ApplicationController
 
   # GET /api/v1/top_ups
   def index
-    @top_ups = TopUp.all
+    @top_ups = @current_user.top_ups
     render json: serializer.new(@top_ups).serializable_hash
   end
 

@@ -1,17 +1,17 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: %i[show update]
+  before_action :set_user, only: %i[ update]
   skip_before_action :authorize_request, only: %i[create login]
 
   # GET /api/v1/users
   def index
-    @users = User.all
+    @users = User.all.includes(:account)
 
     render json: serializer.new(@users).serializable_hash
   end
 
   # GET /api/v1/users/1
   def show
-    render json: serializer.new(@user).serializable_hash
+    render json: serializer.new(@current_user).serializable_hash
   end
 
   # POST /api/v1/users

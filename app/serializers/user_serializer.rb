@@ -1,6 +1,10 @@
 class UserSerializer
   include JSONAPI::Serializer
   attributes :first_name, :surname, :middle_name, :phone, :email
+
+  attributes :account_balance do |user|
+    user.account&.balance
+  end
 end
 
 # == Schema Information
