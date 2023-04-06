@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :users, except: %i[destroy]
       post 'user/login', to: "users#login"
       resources :top_ups, except: %i[destroy update]
+      resources :transactions, except: %i[destroy update]
     end
   end
 end

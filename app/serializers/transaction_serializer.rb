@@ -1,10 +1,6 @@
-FactoryBot.define do
-  factory :transaction do
-    amount { 100 }
-    sender { create(:user) }
-    receiver { create(:user) }
-    status { 0 }
-  end
+class TransactionSerializer
+  include JSONAPI::Serializer
+  attributes :amount, :status
 end
 
 # == Schema Information

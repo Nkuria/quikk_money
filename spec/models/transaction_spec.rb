@@ -19,7 +19,7 @@ end
 # Table name: transactions
 #
 #  id          :uuid             not null, primary key
-#  amount      :decimal(8, 6)
+#  amount      :decimal(8, 2)
 #  status      :integer
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
