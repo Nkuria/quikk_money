@@ -1,9 +1,15 @@
 class Api::V1::TransactionsController < ApplicationController
   before_action :set_transaction, only: %i[show]
+  before_action :set_user, only: %i[index]
 
   # GET /api/v1/transactions
   def index
-    @transactions = Transaction.all
+    @transactions = if @user
+                      Transaction.where(sender_id: @user.id).or(Transaction.where(receiver_id: @user.id)).order(created_at: :desc)
+
+                    else
+                      Transaction.all
+                    end
 
     render json: serializer.new(@transactions).serializable_hash
   end

@@ -10,4 +10,8 @@ class ApplicationController < ActionController::API
       }
     }, status: status_code
   end
+
+  def set_user
+    @user = User.find(params[:user_id]) if params[:user_id]
+  end
 end
