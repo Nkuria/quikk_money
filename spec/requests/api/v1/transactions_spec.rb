@@ -83,6 +83,18 @@ RSpec.describe '/api/v1/transactions', type: :request do
       end
     end
 
+    # context 'Receiver and sender balance should be updated' do
+
+    #   it 'Updates Sender Balancer' do
+    #     current_balance = sender.account.balance
+    #     post api_v1_transactions_url,
+    #          params: { transaction: valid_params }, headers: valid_headers, as: :json
+    #     byebug
+    #     expect(sender.account.balance).to eq(current_balance - valid_params[:amount])
+    #     expect(response.content_type).to match(a_string_including('application/json'))
+    #   end
+    # end
+
     context 'with invalid parameters' do
       it 'does not create a new Api::V1::Transaction' do
         expect do
