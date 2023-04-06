@@ -15,40 +15,40 @@ class Api::V1::TopUpsController < ApplicationController
   # POST /api/v1/top_ups
   def create
     @top_up = TopUp.new(top_up_params)
-    @top.account = @current_user.account
-    @top.status = 0
+    @top_up.account = @current_user.account
+    @top_up.status = 0
     @top_up.phone = @current_user.phone unless top_up_params[:phone]
 
     if @top_up.save
       @top_up.update_balance
-      render json: serializer.new(@top_up).serializable_hash
+      render json: serializer.new(@top_up).serializable_hash, status: :created
     else
       render json: @top_up.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /api/v1/top_ups/1
-  def update
-    if @top_up.update(top_up_params)
-      render json: serializer.new(@top_up).serializable_hash
-    else
-      render json: @top_up.errors, status: :unprocessable_entity
-    end
-  end
+  # def update
+  #   if @top_up.update(top_up_params)
+  #     render json: serializer.new(@top_up).serializable_hash
+  #   else
+  #     render json: @top_up.errors, status: :unprocessable_entity
+  #   end
+  # end
 
-  # DELETE /api/v1/top_ups/1
-  def destroy
-    @top_up.destroy
-  end
+  # # DELETE /api/v1/top_ups/1
+  # def destroy
+  #   @top_up.destroy
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_api_v1_top_up
+    def set_top_up
       @top_up = TopUp.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
-    def api_v1_top_up_params
+    def top_up_params
       params.require(:top_up).permit(:amount, :phone)
     end
 

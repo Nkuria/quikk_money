@@ -5,7 +5,7 @@ class TopUp < ApplicationRecord
   enum status: %i[completed pending failed]
 
   def update_balance
-    account.update(balance: balance + amount) if status == 'completed'
+    account.update(balance: account.balance + amount) if status == 'completed'
   end
 end
 

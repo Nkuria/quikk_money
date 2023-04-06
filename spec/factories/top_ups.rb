@@ -1,6 +1,11 @@
+require 'securerandom'
 FactoryBot.define do
   factory :top_up do
-    
+    amount { 100 }
+    phone { "+2547#{8.times.map { Random.rand(10) }.join}" }
+    reference_code { SecureRandom.alphanumeric }
+    status { 1 }
+    association :account, factory: :account, strategy: :create
   end
 end
 

@@ -12,116 +12,78 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/api/v1/top_ups", type: :request do
+RSpec.describe '/api/v1/top_ups', type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Api::V1::TopUp. As you add validations to Api::V1::TopUp, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:created_user) { create(:user) }
+  let(:created_top_up) { create(:top_up) }
+  let(:builded_top_up) { build(:top_up) }
+  let(:valid_attributes) do
+    {
+      amount: builded_top_up.amount,
+      phone: builded_top_up.phone
+    }
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+  let(:invalid_attributes) do{
+    amount: nil
   }
+  end
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
   # Api::V1::TopUpsController, or in your router and rack
   # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
-    {}
-  }
+  let(:valid_headers) do
+    { Authorization: "Bearer #{authenticate(created_user)}" }
+  end
 
-  describe "GET /index" do
-    it "renders a successful response" do
-      Api::V1::TopUp.create! valid_attributes
+  describe 'GET /index' do
+    it 'renders a successful response' do
       get api_v1_top_ups_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      top_up = Api::V1::TopUp.create! valid_attributes
-      get api_v1_top_up_url(top_up), as: :json
+  describe 'GET /show' do
+    it 'renders a successful response' do
+      get api_v1_top_up_url(created_top_up), headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Api::V1::TopUp" do
-        expect {
+  describe 'POST /create' do
+    context 'with valid parameters' do
+      it 'creates a new Api::V1::TopUp' do
+        expect do
           post api_v1_top_ups_url,
-               params: { api_v1_top_up: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Api::V1::TopUp, :count).by(1)
+               params: { top_up: valid_attributes }, headers: valid_headers, as: :json
+        end.to change(TopUp, :count).by(1)
       end
 
-      it "renders a JSON response with the new api_v1_top_up" do
+      it 'renders a JSON response with the new api_v1_top_up' do
         post api_v1_top_ups_url,
-             params: { api_v1_top_up: valid_attributes }, headers: valid_headers, as: :json
+             params: { top_up: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new Api::V1::TopUp" do
-        expect {
+    context 'with invalid parameters' do
+      it 'does not create a new Api::V1::TopUp' do
+        expect do
           post api_v1_top_ups_url,
-               params: { api_v1_top_up: invalid_attributes }, as: :json
-        }.to change(Api::V1::TopUp, :count).by(0)
+               params: { top_up: invalid_attributes }, as: :json
+        end.to change(TopUp, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new api_v1_top_up" do
+      it 'renders a JSON response with errors for the new api_v1_top_up' do
         post api_v1_top_ups_url,
-             params: { api_v1_top_up: invalid_attributes }, headers: valid_headers, as: :json
+             params: { top_up: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
-    end
-  end
-
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested api_v1_top_up" do
-        top_up = Api::V1::TopUp.create! valid_attributes
-        patch api_v1_top_up_url(top_up),
-              params: { api_v1_top_up: new_attributes }, headers: valid_headers, as: :json
-        top_up.reload
-        skip("Add assertions for updated state")
-      end
-
-      it "renders a JSON response with the api_v1_top_up" do
-        top_up = Api::V1::TopUp.create! valid_attributes
-        patch api_v1_top_up_url(top_up),
-              params: { api_v1_top_up: new_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the api_v1_top_up" do
-        top_up = Api::V1::TopUp.create! valid_attributes
-        patch api_v1_top_up_url(top_up),
-              params: { api_v1_top_up: invalid_attributes }, headers: valid_headers, as: :json
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to match(a_string_including("application/json"))
-      end
-    end
-  end
-
-  describe "DELETE /destroy" do
-    it "destroys the requested api_v1_top_up" do
-      top_up = Api::V1::TopUp.create! valid_attributes
-      expect {
-        delete api_v1_top_up_url(top_up), headers: valid_headers, as: :json
-      }.to change(Api::V1::TopUp, :count).by(-1)
     end
   end
 end
