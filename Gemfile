@@ -54,3 +54,5 @@ gem 'rubocop'
 gem 'bcrypt', '~> 3.1'
 
 gem 'jsonapi-serializer'
+
+gem "jwt", "~> 2.7"
