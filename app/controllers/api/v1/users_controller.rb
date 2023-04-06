@@ -17,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    if @api_v1_user.save
+    if @user.save
       render json: serializer.new(@user).serializable_hash, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
