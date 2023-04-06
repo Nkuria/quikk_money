@@ -35,8 +35,7 @@ class Transaction < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << ['ID', 'Sender', 'Receiver', 'Amount', 'Created At']
       all.each do |transaction|
-        csv << [transaction.id, transaction.sender.email, transaction.receiver.email, transaction.amount,
-                transaction.created_at]
+        csv << [transaction.id, transaction.sender.email, transaction.receiver.email, transaction.amount, transaction.created_at]
       end
     end
   end
