@@ -69,7 +69,7 @@ RSpec.describe '/api/v1/users', type: :request do
         expect do
           post api_v1_users_url,
                params: { user: valid_attributes }, as: :json
-        end.to change(User, :count).by(1)
+        end.to change(User, :count).by(1).and change(Account, :count).by(1)
       end
 
       it 'renders a JSON response with the new api_v1_user' do

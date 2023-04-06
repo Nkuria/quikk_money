@@ -5,8 +5,13 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
 
   has_one :account, dependent: :destroy
-
   has_secure_password
+
+  after_create :create_account
+
+  def create_account
+    Account.create(balance: 0.0, user: self)
+  end
 end
 
 # == Schema Information
