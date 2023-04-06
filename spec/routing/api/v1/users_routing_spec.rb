@@ -21,9 +21,5 @@ RSpec.describe Api::V1::UsersController, type: :routing do
     it 'routes to #update via PATCH' do
       expect(patch: '/api/v1/users/1').to route_to('api/v1/users#update', id: '1', format: :json)
     end
-
-    it 'routes to #destroy' do
-      expect(delete: '/api/v1/users/1').to route_to('api/v1/users#destroy', id: '1', format: :json)
-    end
   end
 end

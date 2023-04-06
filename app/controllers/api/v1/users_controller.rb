@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+  before_action :set_user, only: %i[show update]
+  skip_before_action :authorize_request, only: %i[create login]
 
   # GET /api/v1/users
   def index
@@ -34,13 +35,12 @@ class Api::V1::UsersController < ApplicationController
   end
 
   # DELETE /api/v1/users/1
-  def destroy
-    @user.destroy
-  end
+  # def destroy
+  #   @user.destroy
+  # end
 
   def login
     @user = User.find_by_phone(user_params[:phone])
-    # byebug
     if @user&.authenticate(user_params[:password])
       render json: {
         token: JsonWebToken.encode(user_id: @user.id),
