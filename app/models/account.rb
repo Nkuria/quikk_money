@@ -1,7 +1,7 @@
 class Account < ApplicationRecord
   belongs_to :user
 
-  validates :account, presence: true
+  validates :balance, presence: true
 end
 
 # == Schema Information
