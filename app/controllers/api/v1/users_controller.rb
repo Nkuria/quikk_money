@@ -40,6 +40,7 @@ class Api::V1::UsersController < ApplicationController
 
   def login
     @user = User.find_by_phone(user_params[:phone])
+    # byebug
     if @user&.authenticate(user_params[:password])
       render json: {
         token: JsonWebToken.encode(user_id: @user.id),

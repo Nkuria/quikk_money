@@ -136,4 +136,15 @@ RSpec.describe '/api/v1/users', type: :request do
       end.to change(User, :count).by(-1)
     end
   end
+
+  describe 'User login' do
+    it 'user should login with valid credentials' do
+      post '/api/v1/user/login', params: { user: { phone: created_user.phone, password: created_user.password } }
+      expect(response).to have_http_status(:ok)
+    end
+    it 'User should not login with valid credentials' do
+      post '/api/v1/user/login', params: {user: {phone: created_user.phone, password: '12345678'}}
+      expect(response).to have_http_status(:unauthorized)
+    end
+  end
 end
