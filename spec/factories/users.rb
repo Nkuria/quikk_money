@@ -7,7 +7,7 @@ FactoryBot.define do
     password { Faker::Name.name }
     phone { "+2547#{8.times.map { Random.rand(10) }.join}" }
     before(:create) do |user|
-      create(:account, user: user, balance: 10000)
+      create(:account, user:, balance: 10_000)
     end
   end
 end

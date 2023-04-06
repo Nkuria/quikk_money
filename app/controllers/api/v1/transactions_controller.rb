@@ -20,7 +20,7 @@ class Api::V1::TransactionsController < ApplicationController
     @transaction = @current_user.sent_transactions.build(transaction_params.slice(:amount))
     receiver = User.find_by(phone: transaction_params[:receiver_phone])
     return render_error('Could Not find User', 422) unless receiver
-    # byebug
+
     @transaction.receiver = receiver
     @transaction.status = 0
     if @transaction.save

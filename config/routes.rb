@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :users, except: %i[destroy]
-      post 'user/login', to: "users#login"
+      post 'user/login', to: 'users#login'
       resources :top_ups, except: %i[destroy update]
       resources :transactions, except: %i[destroy update]
     end

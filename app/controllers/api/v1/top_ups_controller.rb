@@ -1,5 +1,5 @@
 class Api::V1::TopUpsController < ApplicationController
-  before_action :set_top_up, only: %i[ show update destroy ]
+  before_action :set_top_up, only: %i[show update destroy]
 
   # GET /api/v1/top_ups
   def index
@@ -42,17 +42,18 @@ class Api::V1::TopUpsController < ApplicationController
   # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_top_up
-      @top_up = TopUp.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def top_up_params
-      params.require(:top_up).permit(:amount, :phone)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_top_up
+    @top_up = TopUp.find(params[:id])
+  end
 
-    def serializer
-      TopUpSerializer
-    end
+  # Only allow a list of trusted parameters through.
+  def top_up_params
+    params.require(:top_up).permit(:amount, :phone)
+  end
+
+  def serializer
+    TopUpSerializer
+  end
 end

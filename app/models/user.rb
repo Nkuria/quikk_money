@@ -5,8 +5,8 @@ class User < ApplicationRecord
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, allow_blank: true
 
   has_one :account, dependent: :destroy
-  has_many :sent_transactions, class_name: 'Transaction', foreign_key: "sender_id"
-  has_many :received_transactions, class_name: 'Transaction', foreign_key: "receiver_id"
+  has_many :sent_transactions, class_name: 'Transaction', foreign_key: 'sender_id'
+  has_many :received_transactions, class_name: 'Transaction', foreign_key: 'receiver_id'
   has_secure_password
 
   after_create :create_account

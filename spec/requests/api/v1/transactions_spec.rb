@@ -38,7 +38,7 @@ RSpec.describe '/api/v1/transactions', type: :request do
   let(:invalid_attributes) do
     {
       amount: 100.00,
-      receiver_phone: ""
+      receiver_phone: ''
     }
   end
 

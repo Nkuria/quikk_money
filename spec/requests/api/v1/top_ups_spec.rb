@@ -26,9 +26,10 @@ RSpec.describe '/api/v1/top_ups', type: :request do
     }
   end
 
-  let(:invalid_attributes) do{
-    amount: nil
-  }
+  let(:invalid_attributes) do
+    {
+      amount: nil
+    }
   end
 
   # This should return the minimal set of values that should be in the headers

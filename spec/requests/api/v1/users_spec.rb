@@ -46,7 +46,7 @@ RSpec.describe '/api/v1/users', type: :request do
   # Api::V1::UsersController, or in your router and rack
   # middleware. Be sure to keep this updated too.
   let(:valid_headers) do
-    {Authorization: "Bearer #{authenticate(created_user)}"}
+    { Authorization: "Bearer #{authenticate(created_user)}" }
   end
 
   describe 'GET /index' do
@@ -107,7 +107,7 @@ RSpec.describe '/api/v1/users', type: :request do
         patch api_v1_user_url(created_user),
               params: { user: valid_attributes }, headers: valid_headers, as: :json
         created_user.reload
-        expect(created_user.first_name). to eq(valid_attributes[:first_name])
+        expect(created_user.first_name).to eq(valid_attributes[:first_name])
       end
 
       it 'renders a JSON response with the api_v1_user' do
@@ -143,7 +143,7 @@ RSpec.describe '/api/v1/users', type: :request do
       expect(response).to have_http_status(:ok)
     end
     it 'User should not login with valid credentials' do
-      post '/api/v1/user/login', params: {user: {phone: created_user.phone, password: '12345678'}}
+      post '/api/v1/user/login', params: { user: { phone: created_user.phone, password: '12345678' } }
       expect(response).to have_http_status(:unauthorized)
     end
   end
