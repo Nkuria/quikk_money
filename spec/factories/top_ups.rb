@@ -10,6 +10,7 @@ end
 #
 #  id             :uuid             not null, primary key
 #  amount         :decimal(8, 2)
+#  phone          :string
 #  reference_code :string
 #  status         :integer
 #  created_at     :datetime         not null

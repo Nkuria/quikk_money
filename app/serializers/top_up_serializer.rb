@@ -1,12 +1,6 @@
-require 'rails_helper'
-
-RSpec.describe TopUp, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
-
-  it { should belong_to(:account) }
-  it { should validate_presence_of(:status) }
-  it { should validate_presence_of(:amount) }
-  it { should validate_presence_of(:phone) }
+class TopUpSerializer
+  include JSONAPI::Serializer
+  attributes :amount, :reference_code, :status
 end
 
 # == Schema Information

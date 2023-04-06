@@ -5,6 +5,7 @@ class CreateTopUps < ActiveRecord::Migration[7.0]
       t.decimal :amount, precision: 8, scale: 2
       t.integer :status
       t.string :reference_code
+      t.string :phone
 
       t.timestamps
     end

@@ -1,8 +1,12 @@
 class TopUp < ApplicationRecord
   belongs_to :account
-  validates :amount, :status, presence: true
+  validates :amount, :status, :phone, presence: true
 
   enum status: %i[completed pending failed]
+
+  def update_balance
+    account.update(balance: balance + amount) if status == 'completed'
+  end
 end
 
 # == Schema Information
@@ -11,6 +15,7 @@ end
 #
 #  id             :uuid             not null, primary key
 #  amount         :decimal(8, 2)
+#  phone          :string
 #  reference_code :string
 #  status         :integer
 #  created_at     :datetime         not null

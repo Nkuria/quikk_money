@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_064147) do
     t.decimal "amount", precision: 8, scale: 2
     t.integer "status"
     t.string "reference_code"
+    t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["account_id"], name: "index_top_ups_on_account_id"
