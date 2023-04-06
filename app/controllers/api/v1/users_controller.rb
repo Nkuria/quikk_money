@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_user, only: %i[ update]
+  before_action :set_user, only: %i[update]
   skip_before_action :authorize_request, only: %i[create login]
 
   # GET /api/v1/users

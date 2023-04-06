@@ -10,7 +10,7 @@ class TransactionMailer < ApplicationMailer
     @receiver = transaction.receiver
     @sender = transaction.sender
 
-    mail(to: transaction.receiver.email, subject: "New Transaction")
+    mail(to: transaction.receiver.email, subject: 'New Transaction')
   end
 
   def send_csv(email, csv_data)

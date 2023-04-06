@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 # RSpec.describe TransactionMailer, type: :mailer do
 #   describe "transaction_notification" do

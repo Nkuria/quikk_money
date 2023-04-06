@@ -1,7 +1,7 @@
 class Notification < ApplicationRecord
-    belongs_to :user
+  belongs_to :user
 
-    validates :message, :title, :reference_code, presence: true
+  validates :message, :title, :reference_code, presence: true
 end
 
 # == Schema Information

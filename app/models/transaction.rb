@@ -26,7 +26,8 @@ class Transaction < ApplicationRecord
   end
 
   def create_notification
-    Notification.create(user: receiver, title: "New Transaction", message: "Hello #{receiver.first_name}, You have received #{amount} from #{sender.first_name}")
+    Notification.create(user: receiver, title: 'New Transaction',
+                        message: "Hello #{receiver.first_name}, You have received #{amount} from #{sender.first_name}")
     TransactionNotificationJob.perform_later(self)
   end
 
@@ -34,7 +35,8 @@ class Transaction < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << ['ID', 'Sender', 'Receiver', 'Amount', 'Created At']
       all.each do |transaction|
-        csv << [transaction.id, transaction.sender.email, transaction.receiver.email, transaction.amount, transaction.created_at]
+        csv << [transaction.id, transaction.sender.email, transaction.receiver.email, transaction.amount,
+                transaction.created_at]
       end
     end
   end
