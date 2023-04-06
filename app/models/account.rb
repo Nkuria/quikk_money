@@ -1,5 +1,6 @@
 class Account < ApplicationRecord
   belongs_to :user
+  has_many :top_ups
 
   validates :balance, presence: true
 end
