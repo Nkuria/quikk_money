@@ -12,116 +12,128 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/api/v1/users", type: :request do
+RSpec.describe '/api/v1/users', type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Api::V1::User. As you add validations to Api::V1::User, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:created_user) { create(:user) }
+  let(:builded_user) { build(:user) }
+  let(:valid_attributes) do
+    {
+      email: builded_user.email,
+      first_name: builded_user.first_name,
+      middle_name: builded_user.middle_name,
+      phone: builded_user.phone,
+      surname: builded_user.surname,
+      password: builded_user.password
+    }
+  end
+
+  let(:invalid_attributes) do
+    {
+      email: builded_user.email,
+      first_name: builded_user.first_name,
+      middle_name: builded_user.middle_name,
+      phone: nil,
+      surname: nil,
+      password: builded_user.password
+    }
+  end
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
   # Api::V1::UsersController, or in your router and rack
   # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
+  let(:valid_headers) do
     {}
-  }
+  end
 
-  describe "GET /index" do
-    it "renders a successful response" do
-      Api::V1::User.create! valid_attributes
+  describe 'GET /index' do
+    it 'renders a successful response' do
       get api_v1_users_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
-      user = Api::V1::User.create! valid_attributes
-      get api_v1_user_url(user), as: :json
+  describe 'GET /show' do
+    it 'renders a successful response' do
+      get api_v1_user_url(created_user), as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Api::V1::User" do
-        expect {
+  describe 'POST /create' do
+    context 'with valid parameters' do
+      it 'creates a new Api::V1::User' do
+        expect do
           post api_v1_users_url,
-               params: { api_v1_user: valid_attributes }, headers: valid_headers, as: :json
-        }.to change(Api::V1::User, :count).by(1)
+               params: { user: valid_attributes }, headers: valid_headers, as: :json
+        end.to change(User, :count).by(1)
       end
 
-      it "renders a JSON response with the new api_v1_user" do
+      it 'renders a JSON response with the new api_v1_user' do
         post api_v1_users_url,
-             params: { api_v1_user: valid_attributes }, headers: valid_headers, as: :json
+             params: { user: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new Api::V1::User" do
-        expect {
+    context 'with invalid parameters' do
+      it 'does not create a new Api::V1::User' do
+        expect do
           post api_v1_users_url,
-               params: { api_v1_user: invalid_attributes }, as: :json
-        }.to change(Api::V1::User, :count).by(0)
+               params: { user: invalid_attributes }, as: :json
+        end.to change(User, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new api_v1_user" do
+      it 'renders a JSON response with errors for the new api_v1_user' do
         post api_v1_users_url,
-             params: { api_v1_user: invalid_attributes }, headers: valid_headers, as: :json
+             params: { user: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
-
-      it "updates the requested api_v1_user" do
-        user = Api::V1::User.create! valid_attributes
-        patch api_v1_user_url(user),
-              params: { api_v1_user: new_attributes }, headers: valid_headers, as: :json
-        user.reload
-        skip("Add assertions for updated state")
+  describe 'PATCH /update' do
+    context 'with valid parameters' do
+      let(:new_attributes) do
+        skip('Add a hash of attributes valid for your model')
       end
 
-      it "renders a JSON response with the api_v1_user" do
-        user = Api::V1::User.create! valid_attributes
-        patch api_v1_user_url(user),
-              params: { api_v1_user: new_attributes }, headers: valid_headers, as: :json
+      it 'updates the requested api_v1_user' do
+        patch api_v1_user_url(created_user),
+              params: { user: valid_attributes }, headers: valid_headers, as: :json
+        created_user.reload
+        expect(created_user.first_name). to eq(valid_attributes[:first_name])
+      end
+
+      it 'renders a JSON response with the api_v1_user' do
+        patch api_v1_user_url(created_user),
+              params: { user: valid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
 
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the api_v1_user" do
-        user = Api::V1::User.create! valid_attributes
-        patch api_v1_user_url(user),
-              params: { api_v1_user: invalid_attributes }, headers: valid_headers, as: :json
+    context 'with invalid parameters' do
+      it 'renders a JSON response with errors for the api_v1_user' do
+        patch api_v1_user_url(created_user),
+              params: { user: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested api_v1_user" do
-      user = Api::V1::User.create! valid_attributes
-      expect {
+  describe 'DELETE /destroy' do
+    it 'destroys the requested api_v1_user' do
+      user = User.create! valid_attributes
+      expect do
         delete api_v1_user_url(user), headers: valid_headers, as: :json
-      }.to change(Api::V1::User, :count).by(-1)
+      end.to change(User, :count).by(-1)
     end
   end
 end
