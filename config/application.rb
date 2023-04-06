@@ -24,5 +24,7 @@ module QuikkMoney
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.eager_load_paths << Rails.root.join('lib') # Load all files in lib folder in the application
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
