@@ -38,6 +38,18 @@ class Api::V1::UsersController < ApplicationController
     @user.destroy
   end
 
+  def login
+    @user = User.find_by_phone(user_params[:phone])
+    if @user&.authenticate(user_params[:password])
+      render json: {
+        token: JsonWebToken.encode(user_id: @user.id),
+        phone: @user.phone
+      }
+    else
+      head :unauthorized
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -46,7 +58,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  def api_v1_user_params
+  def user_params
     params.require(:user).permit(:email, :first_name, :middle_name, :password, :phone, :surname)
   end
 
