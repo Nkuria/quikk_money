@@ -12,4 +12,9 @@ class TransactionMailer < ApplicationMailer
 
     mail(to: transaction.receiver.email, subject: "New Transaction")
   end
+
+  def send_csv(email, csv_data)
+    attachments['transactions.csv'] = csv_data
+    mail(to: email, subject: 'Transactions CSV')
+  end
 end

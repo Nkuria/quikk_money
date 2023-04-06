@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post 'user/login', to: 'users#login'
       resources :top_ups, except: %i[destroy update]
       resources :transactions, except: %i[destroy update]
+      get '/email_transactions', to: 'transactions#send_csv_via_email'
     end
   end
 end

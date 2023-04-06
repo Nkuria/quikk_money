@@ -45,6 +45,19 @@ class Api::V1::TransactionsController < ApplicationController
   #   @transaction.destroy
   # end
 
+  def send_csv_via_email
+    start_date = Date.parse(params[:start_date])
+    end_date = Date.parse(params[:end_date])
+    @transactions = Transaction.where(sender_id: @current_user.id).or(Transaction.where(receiver_id: @current_user.id))
+    transactions = @transactions.where(created_at: start_date.beginning_of_day..end_date.end_of_day)
+
+    csv_data = transactions.to_csv
+
+    TransactionMailer.send_csv(@current_user.email, csv_data).deliver_later
+
+    render json: { message: 'CSV file will be sent to your email shortly' }, status: :ok
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -1,4 +1,5 @@
 class Transaction < ApplicationRecord
+  require 'csv'
   belongs_to :sender, class_name: 'User', foreign_key: 'sender_id'
   belongs_to :receiver, class_name: 'User', foreign_key: 'receiver_id'
 
@@ -27,6 +28,15 @@ class Transaction < ApplicationRecord
   def create_notification
     Notification.create(user: receiver, title: "New Transaction", message: "Hello #{receiver.first_name}, You have received #{amount} from #{sender.first_name}")
     TransactionNotificationJob.perform_later(self)
+  end
+
+  def self.to_csv
+    CSV.generate(headers: true) do |csv|
+      csv << ['ID', 'Sender', 'Receiver', 'Amount', 'Created At']
+      all.each do |transaction|
+        csv << [transaction.id, transaction.sender.email, transaction.receiver.email, transaction.amount, transaction.created_at]
+      end
+    end
   end
 end
 
