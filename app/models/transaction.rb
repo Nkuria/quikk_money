@@ -8,6 +8,7 @@ class Transaction < ApplicationRecord
 
   after_create :update_sender_balance
   after_create :update_receiver_balance
+  after_create :create_notification
 
   def update_sender_balance
     sender_account = sender.account
@@ -21,6 +22,10 @@ class Transaction < ApplicationRecord
     receiver_balance = receiver_account.balance + amount
 
     receiver_account.update(balance: receiver_balance)
+  end
+
+  def create_notification
+    Notification.create(user: receiver, title: "New Transaction", message: "Hello #{receiver.first_name}, You have received #{amount} from #{sender.first_name}")
   end
 end
 
